@@ -30,6 +30,7 @@ def main():
     dispatcher.add_handler(CommandHandler("add", add))
     dispatcher.add_handler(CommandHandler("help", help_command))
     dispatcher.add_handler(CommandHandler("hello", hello_command))
+    dispatcher.add_handler(CommandHandler("bye", bye_command))
 
     # To start the bot:
     updater.start_polling()
@@ -69,6 +70,15 @@ def hello_command(update: Update, context: CallbackContext) -> None:
         update.message.reply_text('Good day, ' + msg + ' ! ')
     except (IndexError, ValueError):
         update.message.reply_text('Usage: /hello <keyword>')
+
+def bye_command(update: Update, context: CallbackContext) -> None:
+    """Send a message when the command /bye is issued."""
+    try: 
+        logging.info(context.args[0])
+        msg = context.args[0]   # /bye keyword <-- this should store the keyword
+        update.message.reply_text('Goodbye, ' + msg + ' ! ')
+    except (IndexError, ValueError):
+        update.message.reply_text('Usage: /bye <keyword>')
 
 if __name__ == '__main__':
     main()
